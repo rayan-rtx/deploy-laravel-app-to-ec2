@@ -1,0 +1,29 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: laravel-app
+        ports:
+            - "80:80"
+        networks:
+            - laravel-network
+
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: laravel-pma
+        restart: always
+        ports:
+            - "8080:80"
+        environment:
+            PMA_HOST: ${DB_HOST}
+            PMA_PORT: ${DB_PORT}
+        networks:
+            - laravel-network
+
+
+networks:
+    laravel-network:
+        name: laravel-network
+        driver: bridge
